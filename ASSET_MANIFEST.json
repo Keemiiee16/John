@@ -1,0 +1,15 @@
+{
+  "bank": {
+    "name": "Equity Financial",
+    "logo": "assets/equity_financial_logo.jpeg",
+    "transaction_template": "assets/equity_financial_transaction_template.png"
+  },
+  "apps": {
+    "VYLT": "assets/vylt_receipt_template.png",
+    "NABIT": "assets/nabit_receipt_template.png",
+    "VYBE": "assets/vybe_driver_template.png",
+    "Vantage_Kinetix": "assets/vantage_kinetix_order_template.png",
+    "PAR-T": "assets/part_trip_booked_template.png"
+  },
+  "database": "sql/john_complete_database.sql"
+}
