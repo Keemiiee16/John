@@ -3711,6 +3711,58 @@ client.on(Events.InteractionCreate, async i => {
       }
 
 
+
+      if (id === "vantage_category") {
+        const c = await ensureOwnedCharacter(arg1,i.user.id);
+        if (!i.deferred && !i.replied) await i.deferUpdate();
+
+        const categoryLabels = {
+          electronics:"Electronics",
+          home:"Home",
+          clothing:"Clothing",
+          beauty:"Beauty",
+          toys_games:"Toys & Games",
+          office_school:"Office & School",
+          kitchen:"Kitchen",
+          furniture:"Furniture",
+          baby_kids:"Baby & Kids",
+          sports_fitness:"Sports & Fitness",
+          auto:"Auto & Car Accessories",
+          pet:"Pet Supplies",
+          jewelry:"Jewelry & Accessories",
+          misc:"Miscellaneous"
+        };
+
+        const label = categoryLabels[value] || "Vantage";
+        return respond(i,{
+          content:`🛍️ **${label}** selected for **${c.name}**.\nVantage is ready for the item-selection step.`,
+          components:[selectRow(`vantage_size:${c.id}:${value}`,"Choose item size",[
+            {label:"Small Item",description:"Small everyday item",value:"small"},
+            {label:"Medium Item",description:"Mid-size item",value:"medium"},
+            {label:"Large Item",description:"Large / higher-value item",value:"large"}
+          ])]
+        });
+      }
+
+      if (id === "vantage_size") {
+        const c = await ensureOwnedCharacter(arg1,i.user.id);
+        if (!i.deferred && !i.replied) await i.deferUpdate();
+
+        const parts = i.customId.split(":");
+        const category = parts[2];
+        const categoryLabels = {
+          electronics:"Electronics",home:"Home",clothing:"Clothing",beauty:"Beauty",
+          toys_games:"Toys & Games",office_school:"Office & School",kitchen:"Kitchen",
+          furniture:"Furniture",baby_kids:"Baby & Kids",sports_fitness:"Sports & Fitness",
+          auto:"Auto & Car Accessories",pet:"Pet Supplies",jewelry:"Jewelry & Accessories",misc:"Miscellaneous"
+        };
+
+        return respond(i,{
+          content:`🛒 **${categoryLabels[category] || "Vantage"} — ${value[0].toUpperCase()+value.slice(1)} Item**\nThe category dropdown is responding correctly now.`
+        });
+      }
+
+
       if (id === "manage_open") {
         if (!isModerator(i)) throw new Error("Moderator permissions required.");
         if (!i.deferred && !i.replied) await i.deferUpdate();
